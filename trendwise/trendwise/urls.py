@@ -1,10 +1,10 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from trendwise.views import IndexView
-
 from rest_framework_nested import routers
+
 from authentication.views import AccountViewSet
+from trendwise.views import IndexView
 
 router = routers.SimpleRouter()
 router.register(r'accounts', AccountViewSet)

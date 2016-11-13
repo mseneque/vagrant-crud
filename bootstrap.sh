@@ -50,6 +50,11 @@ python3.4 get-pip.py
 ###  TODO  ###
 # Download web project source code from git hub and place it in the shared Vagrant Dir
 # and setup folder structure for web project #
+git config --global user.name "Matthew Seneque"
+git config --global user.email "mattseneque@gmail.com"
+git config --global core.editor "nano"
+git config --global color.ui true
+
 
 # Install Python Requirements
 pip3 install Django==1.8

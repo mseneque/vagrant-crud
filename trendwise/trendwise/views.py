@@ -4,6 +4,7 @@ from django.utils.decorators import method_decorator
 
 
 # Class based views
+# https://docs.djangoproject.com/en/1.8/topics/class-based-views/
 class IndexView(TemplateView):
     template_name = 'index.html'
 
