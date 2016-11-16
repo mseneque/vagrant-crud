@@ -1,20 +1,8 @@
 import { Component } from '@angular/core';
-import { Hero } from './hero';
+import { OnInit } from '@angular/core';
 
-// This will eventually fetch from a web service, just hard-coded for now.
-// To expose this data to the template, need to assign it in the 'AppComponent' class
-const HEROES: Hero[] = [
-  { id: 11, name: 'Mr. Nice' },
-  { id: 12, name: 'Narco' },
-  { id: 13, name: 'Bombasto' },
-  { id: 14, name: 'Celeritas' },
-  { id: 15, name: 'Magenta' },
-  { id: 16, name: 'RubberMan' },
-  { id: 17, name: 'Dynama' },
-  { id: 18, name: 'Dr IQ' },
-  { id: 19, name: 'Magma' },
-  { id: 20, name: 'Tornado' }
-];
+import { Hero } from './hero';
+import { HeroService } from './hero.service';
 
 
 @Component({
@@ -77,16 +65,35 @@ const HEROES: Hero[] = [
 	    margin-right: .8em;
 	    border-radius: 4px 0 0 4px;
   	}
-  `]
+  `],
+  providers: [HeroService] // otherwise; EXCEPTION: No provider for HeroService! (AppComponent -> HeroService)
 
 })
-export class AppComponent {
-  title = 'Tour of Heroes';
-  heroes = HEROES;
+export class AppComponent implements OnInit{
+
+	title = 'Tour of Heroes';
+  heroes: Hero[];
   selectedHero: Hero;
+
+	//The constructor itself does nothing. The parameter simultaneously defines a 
+	//private heroService property and identifies it as a HeroService injection site.
+	//Now Angular will know to supply an instance of the HeroService when it creates a new AppComponent.
+	constructor(private heroService: HeroService) {} 
 
   onSelect(hero: Hero): void {
   	this.selectedHero = hero;
   }
+
+  getHeroes(): void {
+  	// this.heroes = this.heroService.getHeroes();
+  	// Now it will act on the Promise when it is resolved.
+  	this.heroService.getHeroes().then(heroes => this.heroes = heroes);
+  }
+
+  // ngOnInit is a lifecycle hook. Used to load service on Initialisation, similar to constructor.
+  ngOnInit(): void {
+  	this.getHeroes();
+  }
+
   };
 
