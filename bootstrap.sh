@@ -18,8 +18,20 @@ apt-get install -y build-essential
 
 apt-get autoremove
 
+# CHANGE DIRECTORY TO ROOT PROJECT DIRECTORY FOR NPM TO WORK!!
 # install bower web package manager
 npm install -g bower
+
+npm install -g typescript
+npm install -g lite-server
+npm install -g concurrently
+
+npm install webpack
+npm install -g webpack-dev-server
+npm install -g typings
+# npm install -g tsd
+npm install --no-bin-links
+
 
 # Update and compile python to version 3.4.5
 
@@ -63,4 +75,4 @@ pip3 install Django==1.8
 # Save new dependencies to 'bower.json' with 'bower install PACKAGE --save'
 # Bower usage: https://bower.io/
 cd /vagrant/trendwise
-bower install
+bower install --allow-root

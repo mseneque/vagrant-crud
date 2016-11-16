@@ -7,6 +7,7 @@ from django.utils.decorators import method_decorator
 # https://docs.djangoproject.com/en/1.8/topics/class-based-views/
 class IndexView(TemplateView):
     template_name = 'index.html'
+    # template_name = 'authentication/register.html'
 
     @method_decorator(ensure_csrf_cookie)
     def dispatch(self, *args, **kwargs):

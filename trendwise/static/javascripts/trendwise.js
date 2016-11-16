@@ -1,8 +1,7 @@
 (function () {
   'use strict';
 
-  angular
-    .module('trendwise', [
+  angular.module('trendwise', [
       'trendwise.config',  
       'trendwise.routes',
       'trendwise.authentication'

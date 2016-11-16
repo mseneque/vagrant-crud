@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html ng-app="directoryApp">
+<head>
+    <title>AngularJS examples</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="directory.js"></script>
+    <style type="text/css">
+        ul {
+            list-style: none;
+        }
+        li {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        li span {
+            display: inline-block;
+            line-height: 50px;
+        }
+        li img {
+            margin-right: 10px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+        }
+        .hidden {
+            display: none;
+        }
+        /* The starting CSS styles for the enter animation */
+        .fade.ng-enter {
+            animation: fadeIn 0.2s linear;
+            /*transition:0.3s ease all;
+            opacity:0;
+            transform:translateX(-10px);*/
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            } to {
+                opacity: 1;
+            }
+        }
+
+/*      <!--/* The finishing CSS styles for the enter animation / -->
+        .fade.ng-enter.ng-enter-active {
+            opacity:1;
+            transform:translateX(0);
+        }
+        <!--/* now the element will fade out before it is removed from the DOM / -->
+        .fade.ng-leave {
+            transition:0.3s ease all;
+            opacity:1;
+            transform:translateX(0);
+        }
+        .fade.ng-leave.ng-leave-active {
+            opacity:0;
+            transform:translateX(-10px);
+        }*/
+    </style>
+</head>
+<!-- <body ng-controller="directoryController as dirList"> -->
+<body>
+    <main ui-view></main>
+
+<!--     <input type="text" ng-model="search" placeholder="search value">
+    <button ng-if="!dirList.toggle" ng-click="dirList.toggle = true">Show Names</button>
+    <button ng-if="dirList.toggle" ng-click="dirList.toggle = false">Hide Names</button>
+    <ul ng-if="dirList.toggle" class="fade">
+        <li ng-repeat="item in dirList.list | filter:search"
+            ng-class="item.age > 29 ? 'over-thirty' : 'under-thirty'"
+            ng-include="'person.html'"
+            class="fade">
+
+        </li>
+    </ul>
+    <form ng-submit="dirList.addPerson()">
+        <input type="text" placeholder="Name" ng-model="dirList.name">
+        <input type="number" placeholder="Age" ng-model="dirList.age">
+        <input type="submit" name="Submit">
+    </form> -->
+</body>
+</html>
