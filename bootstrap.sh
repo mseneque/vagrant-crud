@@ -59,6 +59,7 @@ python3.4 get-pip.py
 
 
 
+
 ###  TODO  ###
 # Download web project source code from git hub and place it in the shared Vagrant Dir
 # and setup folder structure for web project #
@@ -69,7 +70,7 @@ git config --global color.ui true
 
 
 # Install Python Requirements
-pip3 install Django==1.8
+pip3 install -r /vagrant/trendwise/requirements.txt
 
 # Use bower install after the 'bower.json' file is in the trendwise folder
 # Save new dependencies to 'bower.json' with 'bower install PACKAGE --save'
