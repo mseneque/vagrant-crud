@@ -7,30 +7,28 @@ if ! [ -L /var/www ]; then
   ln -fs /vagrant /var/www
 fi
 
-apt-get install -y build-essential checkinstall
-apt-get install libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev
+apt-get install -y sqlite3
 apt-get install -y git
+apt-get install -y curl
+
+# Extra dependancies
+apt-get install -y build-essential checkinstall
+apt-get install -y libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev
 
 # Install Node.js v6.9.1 LTS and npm 3.10.8
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 apt-get install -y nodejs
-apt-get install -y build-essential
 
-apt-get autoremove
 
 # CHANGE DIRECTORY TO ROOT PROJECT DIRECTORY FOR NPM TO WORK!!
 # install bower web package manager
 npm install -g bower
-
 npm install -g typescript
 npm install -g lite-server
 npm install -g concurrently
-
-npm install webpack
-npm install -g webpack-dev-server
 npm install -g typings
-# npm install -g tsd
 npm install --no-bin-links
+# npm install -g tsd
 
 
 # Update and compile python to version 3.4.5
@@ -51,13 +49,11 @@ echo "checking Python version installed ..."
 python3.4 -V
 echo "\n"
 
+
 # Download pip3
-apt-get install -y curl
 cd /usr/src
 curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
 python3.4 get-pip.py
-
-
 
 
 ###  TODO  ###
@@ -67,10 +63,18 @@ git config --global user.name "Matthew Seneque"
 git config --global user.email "mattseneque@gmail.com"
 git config --global core.editor "nano"
 git config --global color.ui true
+git remote add origin https://gitihub.com/mseneque/vagrant-crud.git
 
+# cd /vagrant
+# git add .
+# git commit -m "pressent tense meesage of changes"
+# git push -u origin master
 
 # Install Python Requirements
-pip3 install -r /vagrant/trendwise/requirements.txt
+# get requirements with 'pip3 freeze > requirements.txt'
+pip3 install -r /vagrant/python_requirements.txt
+
+apt-get autoremove
 
 # Use bower install after the 'bower.json' file is in the trendwise folder
 # Save new dependencies to 'bower.json' with 'bower install PACKAGE --save'
