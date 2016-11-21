@@ -18,6 +18,7 @@ import { Hero } from './hero';
 export class HeroService {
 
 	private heroesUrl = 'app/heroes';  // URL to web api
+  private registerUrl = 'api/v1/accounts/';
 	private headers = new Headers({'Content-Type': 'application/json'});
 
 	constructor(private http: Http) {}
@@ -63,6 +64,21 @@ export class HeroService {
   		.toPromise()
   		.then(() => null)
   		.catch(this.handleError)
+  }
+
+  register(email: string, password: string, fave_hero: string): Promise<Hero> {
+    return this.http
+      .post(this.registerUrl,
+        JSON.stringify([
+          {email: email},
+          {fave_hero: fave_hero},
+          {password: password}]
+        ),
+          {headers: this.headers}
+        )
+      .toPromise()
+      .then(res => res.json().data)
+      .catch(this.handleError);
   }
 
 }

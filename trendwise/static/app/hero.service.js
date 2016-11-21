@@ -23,6 +23,7 @@ var HeroService = (function () {
     function HeroService(http) {
         this.http = http;
         this.heroesUrl = 'app/heroes'; // URL to web api
+        this.registerUrl = 'api/v1/accounts/';
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
     HeroService.prototype.handleError = function (error) {
@@ -60,6 +61,16 @@ var HeroService = (function () {
             .delete(url, { headers: this.headers })
             .toPromise()
             .then(function () { return null; })
+            .catch(this.handleError);
+    };
+    HeroService.prototype.register = function (email, password, fave_hero) {
+        return this.http
+            .post(this.registerUrl, JSON.stringify([
+            { email: email },
+            { fave_hero: fave_hero },
+            { password: password }]), { headers: this.headers })
+            .toPromise()
+            .then(function (res) { return res.json().data; })
             .catch(this.handleError);
     };
     HeroService = __decorate([
