@@ -15,10 +15,15 @@ class AccountSerializer(serializers.ModelSerializer):
         read_only_files = ('created_at', 'updated_at')
 
         def create(self, validated_data):
+            """
+            Create and return a new `Account` instance, given the validated data.
+            """
             return Account.objects.create(**validated_data)
 
         def update(self, instance, validated_data):
-            # Instance is type of Account
+            """
+            Create and return an existing `Account` instance, given the validated data.
+            """
             instance.username = validated_data.get('username', instance.username)
             instance.tagline = validated_data.get('tagline', instance.tagline)
 
@@ -31,7 +36,7 @@ class AccountSerializer(serializers.ModelSerializer):
                 instance.set_password(password)
                 instance.save()
 
-            # Requthenticate the user after they have changed their password
+            # Reauthenticate the user after they have changed their password
             update_session_auth_hash(self.get.context.get('request'), instance)
 
             return instance

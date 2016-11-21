@@ -24,10 +24,10 @@ apt-get install -y nodejs
 # install bower web package manager
 npm install -g bower
 npm install -g typescript
-npm install -g lite-server
-npm install -g concurrently
-npm install -g typings
-npm install --no-bin-links
+# npm install -g lite-server
+# npm install -g concurrently
+# npm install -g typings
+# npm install --no-bin-links
 # npm install -g tsd
 
 

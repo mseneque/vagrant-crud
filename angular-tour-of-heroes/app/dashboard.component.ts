@@ -7,7 +7,7 @@ import { HeroService } from './hero.service';
 	moduleId: module.id, // for module-relative loading of the templateUrl
 	selector: 'my-dashboard',
 	templateUrl: 'dashboard.component.html',
-	styleUrls: ['dashboard.comonent.css']
+	styleUrls: ['dashboard.component.css']
 })
 
 export class DashboardComponent implements OnInit{
