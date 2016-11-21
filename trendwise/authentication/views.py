@@ -8,11 +8,16 @@ from authentication.permissions import IsAccountOwner
 from authentication.serializers import AccountSerializer  # Inherits from rest_framework.serializers
 
 
-# Viewset for listing, creating, retrieving, updating and destroying objects from the Account model
 class AccountViewSet(viewsets.ModelViewSet):
-    lookup_field = 'username'
+    """
+    The actions provided by the ModelViewSet class are;
+    .list(), .retrieve(), .create(), .update(), .partial_update(), and .destroy()
+    for objects from the Account model
+    """
+    lookup_field = 'email'
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
+    # permission_classes = [IsAccountAdminOrReadOnly]
 
     def get_permissions(self):
         if self.request.method in permissions.SAFE_METHODS:
@@ -24,9 +29,14 @@ class AccountViewSet(viewsets.ModelViewSet):
         return (permissions.IsAuthenticated(), IsAccountOwner(),)
 
     def create(self, request):
+        """
+        Not using the serializers '.save' method because it will store the password in plain text.
+        Instead the
+        """
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
+            # create_user method from
             Account.objects.create_user(**serializer.validated_data)
 
             return Response(serializer.validated_data, status=status.HTTP_201_CREATED)

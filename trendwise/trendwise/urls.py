@@ -1,11 +1,16 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from rest_framework_nested import routers
+from rest_framework import routers
 
 from authentication.views import AccountViewSet
 
 from trendwise.views import IndexView
+
+
+"""
+http://www.django-rest-framework.org/api-guide/routers/#api-guide
+"""
 
 router = routers.SimpleRouter()
 router.register(r'accounts', AccountViewSet)

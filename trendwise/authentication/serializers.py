@@ -1,5 +1,6 @@
 from django.contrib.auth import update_session_auth_hash
 from rest_framework import serializers
+
 from authentication.models import Account
 
 
@@ -9,9 +10,8 @@ class AccountSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Account
-        fields = ('id', 'email', 'username', 'created_at',
-                  'updated_at', 'first_name', 'last_name',
-                  'tagline', 'password', 'confirm_password')
+        fields = ('id', 'email', 'fave_hero',
+                  'password', 'confirm_password')
         read_only_files = ('created_at', 'updated_at')
 
         def create(self, validated_data):
@@ -24,9 +24,7 @@ class AccountSerializer(serializers.ModelSerializer):
             """
             Create and return an existing `Account` instance, given the validated data.
             """
-            instance.username = validated_data.get('username', instance.username)
-            instance.tagline = validated_data.get('tagline', instance.tagline)
-
+            instance.fave_hero = validated_data.get('fave_hero', instance.fave_hero)
             instance.save()
 
             password = validated_data.get('password', None)

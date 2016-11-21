@@ -55,7 +55,7 @@ class Account(AbstractBaseUser):
     objects = AccountManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['fave_hero']
 
     def __str__(self):
         return self.email
