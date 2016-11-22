@@ -13,11 +13,13 @@ var router_1 = require('@angular/router'); //add the configured RouterModule to 
 var dashboard_component_1 = require('./dashboard.component');
 var hero_detail_component_1 = require('./hero-detail.component');
 var heroes_component_1 = require('./heroes.component');
+var register_component_1 = require('./register.component');
 var routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: 'heroes', component: heroes_component_1.HeroesComponent },
     { path: 'dashboard', component: dashboard_component_1.DashboardComponent },
-    { path: 'detail/:id', component: hero_detail_component_1.HeroDetailComponent }
+    { path: 'detail/:id', component: hero_detail_component_1.HeroDetailComponent },
+    { path: 'register', component: register_component_1.RegisterComponent }
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {

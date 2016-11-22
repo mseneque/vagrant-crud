@@ -15,6 +15,7 @@ import { HeroService } from './hero.service';
 })
 export class HeroesComponent implements OnInit{
 
+  errorMessage: string;
   heroes: Hero[];
   selectedHero: Hero;
 
@@ -26,6 +27,9 @@ export class HeroesComponent implements OnInit{
     private router: Router
     ) {} 
 
+  // ngOnInit is a lifecycle hook. Used to load service on Initialisation, similar to constructor.
+  ngOnInit(): void { this.getHeroes(); }
+
   onSelect(hero: Hero): void {
   	this.selectedHero = hero;
   }
@@ -34,7 +38,10 @@ export class HeroesComponent implements OnInit{
   	// this.heroes = this.heroService.getHeroes();
   	// Now it will act on the Promise when it is resolved.
   	this.heroService.getHeroes()
-  		.then(heroes => this.heroes = heroes);
+      .subscribe(
+        heroes => this.heroes = heroes,
+        error => this.errorMessage = <any>error);
+  		// .then(heroes => this.heroes = heroes);
   }
 
   gotoDetail(): void {
@@ -48,7 +55,8 @@ export class HeroesComponent implements OnInit{
       .then(hero => {
         this.heroes.push(hero); // Adds the new hero to the list of Heroes
         this.selectedHero = null;
-      })
+      },
+      error => this.errorMessage = <any>error);
   }
 
   delete(hero: Hero): void {
@@ -58,13 +66,4 @@ export class HeroesComponent implements OnInit{
         if (this.selectedHero === hero) { this.selectedHero = null; }
       })
   }
-
-  // ngOnInit is a lifecycle hook. Used to load service on Initialisation, similar to constructor.
-  ngOnInit(): void {
-  	this.getHeroes();
-  }
-
-
-
-  };
-
+};

@@ -10,7 +10,7 @@ class AccountManager(BaseUserManager):
     def create_user(self, email, password=None, **kwargs):
         """
         Creates and saves a User with the given email, favourite
-        hero and password.
+        hero, super power and password.
         """
         if not email:
             raise ValueError('Users must have a valid email address.')
@@ -20,7 +20,8 @@ class AccountManager(BaseUserManager):
 
         account = self.model(
             email=self.normalize_email(email),
-            fave_hero=kwargs.get('fave_hero')
+            fave_hero=kwargs.get('fave_hero'),
+            super_power=kwargs.get('super_power')
         )
         account.set_password(password)
         account.save(using=self._db)
@@ -41,11 +42,14 @@ class AccountManager(BaseUserManager):
         return account
 
 
-# Extend the Abstract Base User Class
-# and create the Account Model
 class Account(AbstractBaseUser):
+    """
+    Extend the Abstract Base User Class 
+    and create the Account Model.
+    """
     email = models.EmailField(unique=True)
     fave_hero = models.CharField(max_length=150, blank=True)
+    super_power = models.CharField(max_length=150, blank=True)
 
     is_admin = models.BooleanField(default=False)
 

@@ -19,6 +19,7 @@ var app_component_1 = require('./app.component');
 var dashboard_component_1 = require('./dashboard.component');
 var hero_detail_component_1 = require('./hero-detail.component');
 var heroes_component_1 = require('./heroes.component');
+var register_component_1 = require('./register.component');
 // Providers
 var hero_service_1 = require('./hero.service');
 // Imports for loading & configuring the in-memory web api
@@ -35,14 +36,16 @@ var AppModule = (function () {
                 forms_1.FormsModule,
                 app_routing_module_1.AppRoutingModule,
                 http_1.HttpModule,
-                angular_in_memory_web_api_1.InMemoryWebApiModule.forRoot(in_memory_data_service_1.InMemoryDataService),
+                angular_in_memory_web_api_1.InMemoryWebApiModule // In memory API simulation
+                    .forRoot(in_memory_data_service_1.InMemoryDataService, { passThruUnknownUrl: true })
             ],
             // Declatations
             declarations: [
                 app_component_1.AppComponent,
                 dashboard_component_1.DashboardComponent,
                 hero_detail_component_1.HeroDetailComponent,
-                heroes_component_1.HeroesComponent
+                heroes_component_1.HeroesComponent,
+                register_component_1.RegisterComponent
             ],
             // Providers
             providers: [

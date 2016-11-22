@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 
+// Add the RxJS Observable operators.
+import './rxjs-operators';
+
 // App Component is considered the root base page.
 
 @Component({

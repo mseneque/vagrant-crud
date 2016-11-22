@@ -143,3 +143,6 @@ nav a.active {
 * {
   font-family: Arial, Helvetica, sans-serif;
 }
+#app-nav-bar ul li {
+  background-color: #4285f4
+}

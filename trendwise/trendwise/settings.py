@@ -134,36 +134,3 @@ AUTH_USER_MODEL = 'authentication.Account'
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
-
-
-# # Add the Typscript transpiler through PIPELINE_COMPILERS
-# STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
-
-# STATICFILES_FINDERS = (
-#     'django.contrib.staticfiles.finders.FileSystemFinder',
-#     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#     'pipeline.finders.PipelineFinder',
-# )
-
-# PIPELINE = {
-#     'PIPELINE_ENABLED': True,
-#     # 'JAVASCRIPT': {
-#     #     'stats': {
-#     #         'source_filenames': (
-#     #           'js/jquery.js',
-#     #           'js/d3.js',
-#     #           'js/collections/*.js',
-#     #           'js/application.js',
-#     #         ),
-#     #         'output_filename': 'js/stats.js',
-#     #     }
-#     # }
-# }
-
-# PIPELINE['COMPILERS'] = (
-#     'pipeline-typescript.compilers.TypescriptCompiler',
-# )
-
-# PIPELINE_COMPILERS = (
-#     'pipeline-typescript.compilers.TypescriptCompiler',
-# )

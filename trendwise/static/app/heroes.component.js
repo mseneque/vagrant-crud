@@ -19,6 +19,8 @@ var HeroesComponent = (function () {
         this.heroService = heroService;
         this.router = router;
     }
+    // ngOnInit is a lifecycle hook. Used to load service on Initialisation, similar to constructor.
+    HeroesComponent.prototype.ngOnInit = function () { this.getHeroes(); };
     HeroesComponent.prototype.onSelect = function (hero) {
         this.selectedHero = hero;
     };
@@ -27,7 +29,8 @@ var HeroesComponent = (function () {
         // this.heroes = this.heroService.getHeroes();
         // Now it will act on the Promise when it is resolved.
         this.heroService.getHeroes()
-            .then(function (heroes) { return _this.heroes = heroes; });
+            .subscribe(function (heroes) { return _this.heroes = heroes; }, function (error) { return _this.errorMessage = error; });
+        // .then(heroes => this.heroes = heroes);
     };
     HeroesComponent.prototype.gotoDetail = function () {
         this.router.navigate(['/detail', this.selectedHero.id]);
@@ -42,7 +45,7 @@ var HeroesComponent = (function () {
             .then(function (hero) {
             _this.heroes.push(hero); // Adds the new hero to the list of Heroes
             _this.selectedHero = null;
-        });
+        }, function (error) { return _this.errorMessage = error; });
     };
     HeroesComponent.prototype.delete = function (hero) {
         var _this = this;
@@ -53,10 +56,6 @@ var HeroesComponent = (function () {
                 _this.selectedHero = null;
             }
         });
-    };
-    // ngOnInit is a lifecycle hook. Used to load service on Initialisation, similar to constructor.
-    HeroesComponent.prototype.ngOnInit = function () {
-        this.getHeroes();
     };
     HeroesComponent = __decorate([
         core_1.Component({

@@ -9,19 +9,44 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var Dashboard = (function () {
-    function Dashboard() {
+var router_1 = require('@angular/router');
+var hero_service_1 = require('./hero.service');
+var RegisterComponent = (function () {
+    // email: string = 'test1';
+    // fave_hero: string = 'test2';
+    // password: string = 'test3';
+    function RegisterComponent(heroService, router) {
+        this.heroService = heroService;
+        this.router = router;
     }
-    Dashboard = __decorate([
+    RegisterComponent.prototype.ngOnInit = function () { };
+    RegisterComponent.prototype.register = function (email, fave_hero, super_power, password, confirm_password) {
+        var _this = this;
+        if (!(email && fave_hero && super_power
+            && password && confirm_password)) {
+            // TODO: Show previous values upon return
+            return;
+        }
+        this.heroService
+            .register(email, fave_hero, super_power, password, confirm_password)
+            .subscribe(function (hero) {
+            _this.heroes.push(hero); // Adds (pushes) new person to the list
+        });
+        // TODO: redirect the user to the logged in view of the heros and super powers.
+        // email = email.trim();
+        // fave_hero = fave_hero.trim();   
+    };
+    RegisterComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: 'my-register',
             templateUrl: 'register.component.html',
-            styleUrls: ['register.component.css']
+            styleUrls: ['register.component.css'],
+            providers: [hero_service_1.HeroService]
         }), 
-        __metadata('design:paramtypes', [])
-    ], Dashboard);
-    return Dashboard;
+        __metadata('design:paramtypes', [hero_service_1.HeroService, router_1.Router])
+    ], RegisterComponent);
+    return RegisterComponent;
 }());
-exports.Dashboard = Dashboard;
+exports.RegisterComponent = RegisterComponent;
 //# sourceMappingURL=register.component.js.map

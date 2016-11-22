@@ -10,35 +10,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
-require('rxjs/add/operator/toPromise');
-// Original Service Without the Promise (not Async) ****
-// @Injectable()
-// export class HeroService {
-//   getHeroes(): Hero[] {
-//   return HEROES;
-//   }
-// }
+var http_2 = require('@angular/http');
+require('./rxjs-operators');
 // Updated the service to have a promise, it is now (async) (non-blocking)
 var HeroService = (function () {
     function HeroService(http) {
         this.http = http;
         this.heroesUrl = 'app/heroes'; // URL to web api
-        this.registerUrl = 'api/v1/accounts/';
-        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        this.headers = new http_2.Headers({ 'Content-Type': 'application/json' });
     }
+    HeroService.prototype.extractData = function (res) {
+        var body = res.json();
+        return body.data || {};
+    };
     HeroService.prototype.handleError = function (error) {
         console.error('An error occurred', error); // TODO: Add proper error handling
         return Promise.reject(error.message || error);
     };
     HeroService.prototype.getHeroes = function () {
-        return this.http.get(this.heroesUrl)
-            .toPromise()
-            .then(function (response) { return response.json().data; })
+        return this.http
+            .get(this.heroesUrl)
+            .map(this.extractData)
+            .do(function (data) { return console.log(data); }) // diplay results in console
             .catch(this.handleError);
     };
     HeroService.prototype.getHero = function (id) {
         return this.getHeroes()
-            .then(function (heroes) { return heroes.find(function (hero) { return hero.id === id; }); });
+            .map(function (heroes) { return heroes.find(function (hero) { return hero.id === id; }); })
+            .do(function (data) { return console.log(data); }); // diplay results in console
     };
     HeroService.prototype.update = function (hero) {
         var url = this.heroesUrl + "/" + hero.id;
@@ -63,14 +62,19 @@ var HeroService = (function () {
             .then(function () { return null; })
             .catch(this.handleError);
     };
-    HeroService.prototype.register = function (email, password, fave_hero) {
+    HeroService.prototype.register = function (email, fave_hero, super_power, password, confirm_password) {
+        var url = 'api/v1/accounts/';
+        var postData = JSON.stringify({
+            email: email,
+            fave_hero: fave_hero,
+            super_power: super_power,
+            password: password,
+            confirm_password: confirm_password
+        });
+        var options = { headers: this.headers };
         return this.http
-            .post(this.registerUrl, JSON.stringify([
-            { email: email },
-            { fave_hero: fave_hero },
-            { password: password }]), { headers: this.headers })
-            .toPromise()
-            .then(function (res) { return res.json().data; })
+            .post(url, postData, options)
+            .map(this.extractData)
             .catch(this.handleError);
     };
     HeroService = __decorate([

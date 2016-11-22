@@ -11,6 +11,7 @@ import { AppComponent }    	   from './app.component';
 import { DashboardComponent }  from './dashboard.component';
 import { HeroDetailComponent } from './hero-detail.component';
 import { HeroesComponent }     from './heroes.component';
+import { RegisterComponent }   from './register.component';
 
 // Providers
 import { HeroService } from './hero.service';
@@ -27,7 +28,11 @@ import { InMemoryDataService }  from './in-memory-data.service';
     FormsModule,
     AppRoutingModule,
     HttpModule,
-    InMemoryWebApiModule.forRoot(InMemoryDataService), // fake in memory API simulation
+    InMemoryWebApiModule // In memory API simulation
+      .forRoot(
+        InMemoryDataService,
+        {passThruUnknownUrl: true}
+      )
   ],
 
   // Declatations
@@ -35,7 +40,8 @@ import { InMemoryDataService }  from './in-memory-data.service';
     AppComponent,
     DashboardComponent,
     HeroDetailComponent,
-    HeroesComponent
+    HeroesComponent,
+    RegisterComponent
   ],
 
   // Providers

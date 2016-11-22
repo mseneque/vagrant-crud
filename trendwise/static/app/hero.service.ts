@@ -1,84 +1,92 @@
-import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Injectable }      from '@angular/core';
+import { Response, Http }  from '@angular/http';
+import { Headers, RequestOptions }  from '@angular/http';
+import { Hero }            from './hero';
+import { Observable }      from 'rxjs/observable';
 
-import 'rxjs/add/operator/toPromise';
+import './rxjs-operators';
 
-import { Hero } from './hero';
-
-// Original Service Without the Promise (not Async) ****
-// @Injectable()
-// export class HeroService {
-//   getHeroes(): Hero[] {
-//   return HEROES;
-//   }
-// }
 
 // Updated the service to have a promise, it is now (async) (non-blocking)
 @Injectable()
 export class HeroService {
 
 	private heroesUrl = 'app/heroes';  // URL to web api
-  private registerUrl = 'api/v1/accounts/';
 	private headers = new Headers({'Content-Type': 'application/json'});
 
 	constructor(private http: Http) {}
 
-  private handleError(error: any): Promise<any> {
-		console.error('An error occurred', error); // TODO: Add proper error handling
-		return Promise.reject(error.message || error);
-	}
+    private extractData(res: Response) {
+        let body = res.json();
+        return body.data || { };
+    }
 
-	getHeroes(): Promise<Hero[]> {
-		return this.http.get(this.heroesUrl)
-			.toPromise()
-			.then(response => response.json().data as Hero[])
-			.catch(this.handleError);
-  }
+    private handleError(error: any): Promise<any> {
+        console.error('An error occurred', error); // TODO: Add proper error handling
+        return Promise.reject(error.message || error);
+    }
 
-  getHero(id: number): Promise<Hero> {
-  	return this.getHeroes()
-  		.then(heroes => heroes.find(hero => hero.id === id));
-  } 
+    getHeroes (): Observable<Hero[]> {
+        return this.http
+            .get(this.heroesUrl)
+            .map(this.extractData)
+            .do(data => console.log(data)) // diplay results in console
+            .catch(this.handleError);
+    }
 
-  update(hero: Hero): Promise<Hero> {
-  	const url = `${this.heroesUrl}/${hero.id}`;
-  	return this.http
-  		.put(url, JSON.stringify(hero), {headers: this.headers})
-  		.toPromise()
-  		.then(() => hero)
-  		.catch(this.handleError);
-  } 
+    getHero(id: number): Observable<Hero> {
+      	return this.getHeroes()
+            .map(heroes => heroes.find(hero => hero.id === id))
+            .do(data => console.log(data)) // diplay results in console
+    } 
 
-  create(heroName: string): Promise<Hero> {
-  	return this.http
-  		.post(this.heroesUrl, JSON.stringify({name: heroName}), {headers: this.headers})
-  		.toPromise()
-  		.then(res => res.json().data)
-  		.catch(this.handleError);
-  }
+    update(hero: Hero): Promise<Hero> {
+      	const url = `${this.heroesUrl}/${hero.id}`;
+      	return this.http
+      		.put(url, JSON.stringify(hero), {headers: this.headers})
+      		.toPromise()
+      		.then(() => hero)
+      		.catch(this.handleError);
+    } 
 
-  delete(id: number): Promise<void> {
-  	const url = `${this.heroesUrl}/${id}`;
-  	return this.http
-  		.delete(url, {headers: this.headers})
-  		.toPromise()
-  		.then(() => null)
-  		.catch(this.handleError)
-  }
+    create(heroName: string): Promise<Hero> {
+      	return this.http
+      		.post(this.heroesUrl, JSON.stringify({name: heroName}), {headers: this.headers})
+      		.toPromise()
+      		.then(res => res.json().data)
+      		.catch(this.handleError);
+    }
 
-  register(email: string, password: string, fave_hero: string): Promise<Hero> {
-    return this.http
-      .post(this.registerUrl,
-        JSON.stringify([
-          {email: email},
-          {fave_hero: fave_hero},
-          {password: password}]
-        ),
-          {headers: this.headers}
-        )
-      .toPromise()
-      .then(res => res.json().data)
-      .catch(this.handleError);
-  }
+    delete(id: number): Promise<void> {
+      	const url = `${this.heroesUrl}/${id}`;
+      	return this.http
+      		.delete(url, {headers: this.headers})
+      		.toPromise()
+      		.then(() => null)
+      		.catch(this.handleError)
+    }
+
+    register(email: string, 
+            fave_hero: string, 
+            super_power: string, 
+            password: string, 
+            confirm_password: string): 
+        Observable<Hero> {
+            const url = 'api/v1/accounts/';
+            let postData = JSON.stringify({
+                email: email,
+                fave_hero: fave_hero,
+                super_power: super_power,
+                password: password,
+                confirm_password: confirm_password
+            });
+            let options = {headers: this.headers};
+
+        return this.http
+            .post(url, postData, options)
+            .map(this.extractData)
+            // .do(data => console.log(data))
+            .catch(this.handleError);
+    }
 
 }

@@ -10,7 +10,7 @@ class AccountSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Account
-        fields = ('id', 'email', 'fave_hero',
+        fields = ('id', 'email', 'fave_hero', 'super_power',
                   'password', 'confirm_password')
         read_only_files = ('created_at', 'updated_at')
 
@@ -25,6 +25,7 @@ class AccountSerializer(serializers.ModelSerializer):
             Create and return an existing `Account` instance, given the validated data.
             """
             instance.fave_hero = validated_data.get('fave_hero', instance.fave_hero)
+            instance.super_power = validated_data.get('super_power', instance.super_power)
             instance.save()
 
             password = validated_data.get('password', None)
