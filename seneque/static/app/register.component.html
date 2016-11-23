@@ -1,0 +1,26 @@
+<h3>Register</h3>
+<div>
+<div>
+  <label>Email:</label> <input type="email" #email placeholder="eg. john@email.com" />
+</div>
+<div>
+  <label>Favourite Hero:</label> <input type="text" #fave_hero placeholder="your hero"/>
+</div>
+<div>
+  <label>Super Power:</label> <input type="text" #super_power placeholder="sonic boom!"/>
+</div>
+<div>
+  <label>Password:</label> <input type="password" #password placeholder="password123"/>
+</div>
+<div>
+  <label>Confirm Password:</label> <input type="password" #confirm_password placeholder="password123"/>
+</div>
+<button (click)="register(email.value,fave_hero.value,super_power.value,password.value,confirm_password.value); 
+  email.value=''; 
+  fave_hero.value='';
+  super_power.value='';
+  password.value='';
+  confirm_password.value=''">
+  Click to Register
+</button>
+</div>

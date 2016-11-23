@@ -76,8 +76,8 @@ pip3 install -r /vagrant/python_requirements.txt
 
 apt-get autoremove
 
-# Use bower install after the 'bower.json' file is in the trendwise folder
+# Use bower install after the 'bower.json' file is in the seneque folder
 # Save new dependencies to 'bower.json' with 'bower install PACKAGE --save'
 # Bower usage: https://bower.io/
-cd /vagrant/trendwise
+cd /vagrant/seneque
 bower install --allow-root
