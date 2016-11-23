@@ -1,5 +1,7 @@
 {% load compress %}
 {% load staticfiles %}
+
+{% compress js %}
     <!-- 1. Load libraries -->
     <!-- Polyfill for older browsers -->
     <script src="{% static 'node_modules/core-js/client/shim.min.js' %}"></script>
@@ -13,3 +15,4 @@
     <script>
       System.import('app').catch(function(err){ console.error(err); });
     </script>
+{% endcompress %}

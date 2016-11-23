@@ -35,7 +35,7 @@ import { InMemoryDataService }  from './in-memory-data.service';
       )
   ],
 
-  // Declatations
+  // Declarations
   declarations: [
     AppComponent,
     DashboardComponent,
@@ -49,6 +49,7 @@ import { InMemoryDataService }  from './in-memory-data.service';
   	HeroService
   ],
 
+  // Entry point for the app code
   bootstrap: [ AppComponent ]
 })
 

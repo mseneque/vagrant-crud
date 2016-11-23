@@ -44,7 +44,7 @@ class AccountManager(BaseUserManager):
 
 class Account(AbstractBaseUser):
     """
-    Extend the Abstract Base User Class 
+    Extend the Abstract Base User Class
     and create the Account Model.
     """
     email = models.EmailField(unique=True)
