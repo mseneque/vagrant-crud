@@ -66,24 +66,13 @@ export class HeroService {
       		.catch(this.handleError)
     }
 
-    register(email: string, 
-            fave_hero: string, 
-            super_power: string, 
-            password: string, 
-            confirm_password: string): 
+    register(registerData: any): 
         Observable<Hero> {
             const url = 'api/v1/accounts/';
-            let postData = JSON.stringify({
-                email: email,
-                fave_hero: fave_hero,
-                super_power: super_power,
-                password: password,
-                confirm_password: confirm_password
-            });
             let options = {headers: this.headers};
 
         return this.http
-            .post(url, postData, options)
+            .post(url, registerData, options)
             .map(this.extractData)
             // .do(data => console.log(data))
             .catch(this.handleError);

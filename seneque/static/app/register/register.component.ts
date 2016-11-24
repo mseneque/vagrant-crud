@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Headers } from '@angular/http';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { Hero } from '../_models/hero';
 import { HeroService } from '../_services/hero.service';
+import { AlertService } from '../_services/alert.service';
 
 
 @Component({
@@ -15,41 +15,43 @@ import { HeroService } from '../_services/hero.service';
 })
 
 export class RegisterComponent implements OnInit {
-    
-    heroes: Hero[];
+    loading: boolean = false;
+    form: any;
 
     constructor(
         private heroService: HeroService,
-        private router: Router
+        private router: Router,
+        private alertService: AlertService
     ) {} 
 
-    ngOnInit(): void {}
-
-    register(email: string,
-            fave_hero: string,
-            super_power: string,
-            password: string,
-            confirm_password: string
-        ): void {
-            email = email.trim();
-            fave_hero = fave_hero.trim();
-            super_power = super_power.trim();
-
-            if (!(email && fave_hero && super_power 
-            && password && confirm_password))
-                { 
-                    // TODO: Show previous values upon return
-                    return; 
-                }
-            this.heroService
-                .register(email, fave_hero, super_power, password, confirm_password)
-                .subscribe(hero => this.heroes.push(hero)) 
-                // Subscribe pushes new person to the list, (causes exception error)
-                
-            
-        // TODO: redirect the user to the logged in view of the heros and super powers.
-
-           
+    ngOnInit(): void {
+        // initialize form group, controls and validators
+        // this data will be sent JSON to registerData onSubmit of form
+        this.form = new FormGroup({
+            email: new FormControl(''),
+            fave_hero: new FormControl('', Validators.compose([
+                Validators.pattern('[\\w\\-\\s\\/]+'), // Alphanumeric
+                Validators.required
+            ])),
+            super_power: new FormControl('', Validators.required),
+            password: new FormControl('', Validators.required)
+        });
     }
 
+    onSubmit(registerData): void {
+        console.log(registerData);
+        this.loading = true;        
+
+        this.heroService.register(registerData)
+            .subscribe(
+                hero => { 
+                    this.alertService.success('Registration successful', true);
+                    this.router.navigate(['/']);
+                },
+                error => {
+                    this.alertService.error(error);
+                    this.loading = false;
+                })
+       
+    }
 }

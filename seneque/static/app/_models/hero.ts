@@ -5,5 +5,4 @@ export class Hero {
   fave_hero: string;
   super_power: string;
   password: string;
-  confirm_password: string;
 }

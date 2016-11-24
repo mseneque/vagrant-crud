@@ -16,15 +16,16 @@ var app_routing_module_1 = require('./app-routing.module');
 var http_1 = require('@angular/http');
 // Declatations
 var app_component_1 = require('./app.component');
-var dashboard_component_1 = require('./dashboard.component');
-var hero_detail_component_1 = require('./hero-detail.component');
-var heroes_component_1 = require('./heroes.component');
-var register_component_1 = require('./register.component');
+var dashboard_component_1 = require('./dashboard/dashboard.component');
+var hero_detail_component_1 = require('./hero-detail/hero-detail.component');
+var heroes_component_1 = require('./heroes/heroes.component');
+var register_component_1 = require('./register/register.component');
 // Providers
-var hero_service_1 = require('./hero.service');
+var hero_service_1 = require('./_services/hero.service');
+var alert_service_1 = require('./_services/alert.service');
 // Imports for loading & configuring the in-memory web api
 var angular_in_memory_web_api_1 = require('angular-in-memory-web-api');
-var in_memory_data_service_1 = require('./in-memory-data.service');
+var in_memory_data_service_1 = require('./_helpers/in-memory-data.service');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -33,13 +34,14 @@ var AppModule = (function () {
             // Imports
             imports: [
                 platform_browser_1.BrowserModule,
+                forms_1.ReactiveFormsModule,
                 forms_1.FormsModule,
                 app_routing_module_1.AppRoutingModule,
                 http_1.HttpModule,
                 angular_in_memory_web_api_1.InMemoryWebApiModule // In memory API simulation
                     .forRoot(in_memory_data_service_1.InMemoryDataService, { passThruUnknownUrl: true })
             ],
-            // Declatations
+            // Declarations
             declarations: [
                 app_component_1.AppComponent,
                 dashboard_component_1.DashboardComponent,
@@ -49,8 +51,10 @@ var AppModule = (function () {
             ],
             // Providers
             providers: [
-                hero_service_1.HeroService
+                hero_service_1.HeroService,
+                alert_service_1.AlertService
             ],
+            // Entry point for the app code
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])

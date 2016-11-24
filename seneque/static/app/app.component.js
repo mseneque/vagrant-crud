@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 // Add the RxJS Observable operators.
-require('./rxjs-operators');
+require('./_helpers/rxjs-operators');
 // App Component is considered the root base page.
 var AppComponent = (function () {
     function AppComponent() {
@@ -20,7 +20,7 @@ var AppComponent = (function () {
         core_1.Component({
             moduleId: module.id,
             selector: 'my-app',
-            template: "\n\t\t<h1>{{title}}</h1>\n\t\t<nav>\n\t\t\t<a routerLink=\"/dashboard\" routerLinkActive=\"active\">Dashboard</a>\n\t\t\t<a routerLink=\"/heroes\" routerLinkActive=\"active\">Heroes</a>\n\t\t\t<a routerLink=\"/register\" routerLinkActive=\"active\">Register</a>\n\t\t</nav>\n\t\t<router-outlet></router-outlet>\n\t",
+            template: "\n\t\t<h1>{{title}}</h1>\n\t\t<nav>\n\t\t\t<a routerLink=\"/dashboard\" routerLinkActive=\"active\">Dashboard</a>\n\t\t\t<a routerLink=\"/heroes\" routerLinkActive=\"active\">Heroes</a>\n\t\t\t<a routerLink=\"/register\" routerLinkActive=\"active\">Register a Hero</a>\n\t\t\t<a routerLink=\"/login\" routerLinkActive=\"active\">Login</a>\n\t\t</nav>\n\t\t<router-outlet></router-outlet>\n\t",
             styleUrls: ['app.component.css']
         }), 
         __metadata('design:paramtypes', [])

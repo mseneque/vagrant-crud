@@ -12,8 +12,8 @@ var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var common_1 = require('@angular/common');
 require('rxjs/add/operator/switchMap');
-var hero_1 = require('./hero');
-var hero_service_1 = require('./hero.service');
+var hero_1 = require('../_models/hero');
+var hero_service_1 = require('../_services/hero.service');
 var HeroDetailComponent = (function () {
     // Use the constructor to inject these services and saving the values to private fields.
     function HeroDetailComponent(heroService, route, location) {

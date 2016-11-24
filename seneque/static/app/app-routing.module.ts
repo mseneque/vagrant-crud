@@ -7,10 +7,10 @@ import { RouterModule, Routes }  from '@angular/router'; //add the configured Ro
 
 // Declatations
 import { AppComponent }    	   from './app.component';
-import { DashboardComponent }  from './dashboard.component';
-import { HeroDetailComponent } from './hero-detail.component';
-import { HeroesComponent }     from './heroes.component';
-import { RegisterComponent }   from './register.component';
+import { DashboardComponent }  from './dashboard/dashboard.component';
+import { HeroDetailComponent } from './hero-detail/hero-detail.component';
+import { HeroesComponent }     from './heroes/heroes.component';
+import { RegisterComponent }   from './register/register.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: '/dashboard', pathMatch: 'full'	},

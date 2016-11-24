@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var http_2 = require('@angular/http');
-require('./rxjs-operators');
+require('../_helpers/rxjs-operators');
 // Updated the service to have a promise, it is now (async) (non-blocking)
 var HeroService = (function () {
     function HeroService(http) {
@@ -62,18 +62,11 @@ var HeroService = (function () {
             .then(function () { return null; })
             .catch(this.handleError);
     };
-    HeroService.prototype.register = function (email, fave_hero, super_power, password, confirm_password) {
+    HeroService.prototype.register = function (registerData) {
         var url = 'api/v1/accounts/';
-        var postData = JSON.stringify({
-            email: email,
-            fave_hero: fave_hero,
-            super_power: super_power,
-            password: password,
-            confirm_password: confirm_password
-        });
         var options = { headers: this.headers };
         return this.http
-            .post(url, postData, options)
+            .post(url, registerData, options)
             .map(this.extractData)
             .catch(this.handleError);
     };

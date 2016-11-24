@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
-var hero_service_1 = require('./hero.service');
+var hero_service_1 = require('../_services/hero.service');
 var HeroesComponent = (function () {
     //The constructor itself does nothing. The parameter simultaneously defines a 
     //private heroService property and identifies it as a HeroService injection site.

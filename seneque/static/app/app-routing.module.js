@@ -10,10 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router'); //add the configured RouterModule to the AppModule imports array.
-var dashboard_component_1 = require('./dashboard.component');
-var hero_detail_component_1 = require('./hero-detail.component');
-var heroes_component_1 = require('./heroes.component');
-var register_component_1 = require('./register.component');
+var dashboard_component_1 = require('./dashboard/dashboard.component');
+var hero_detail_component_1 = require('./hero-detail/hero-detail.component');
+var heroes_component_1 = require('./heroes/heroes.component');
+var register_component_1 = require('./register/register.component');
 var routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: 'heroes', component: heroes_component_1.HeroesComponent },

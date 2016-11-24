@@ -10,28 +10,46 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
-var hero_service_1 = require('./hero.service');
+// import { Headers } from '@angular/http';
+var forms_1 = require('@angular/forms');
+// import { Hero } from '../_models/hero';
+var hero_service_1 = require('../_services/hero.service');
+var alert_service_1 = require('../_services/alert.service');
 var RegisterComponent = (function () {
-    function RegisterComponent(heroService, router) {
+    // heroes: Hero[];
+    // hero: Hero;
+    function RegisterComponent(heroService, router, alertService) {
         this.heroService = heroService;
         this.router = router;
+        this.alertService = alertService;
+        this.loading = false;
     }
-    RegisterComponent.prototype.ngOnInit = function () { };
-    RegisterComponent.prototype.register = function (email, fave_hero, super_power, password, confirm_password) {
+    RegisterComponent.prototype.ngOnInit = function () {
+        // initialize form group, controls and validators
+        // this data will be sent JSON to registerData onSubmit of form
+        this.form = new forms_1.FormGroup({
+            email: new forms_1.FormControl(''),
+            fave_hero: new forms_1.FormControl('', forms_1.Validators.compose([
+                forms_1.Validators.pattern('[\\w\\-\\s\\/]+'),
+                forms_1.Validators.required
+            ])),
+            super_power: new forms_1.FormControl('', forms_1.Validators.required),
+            password: new forms_1.FormControl('', forms_1.Validators.required)
+        });
+    };
+    RegisterComponent.prototype.onSubmit = function (registerData) {
         var _this = this;
-        email = email.trim();
-        fave_hero = fave_hero.trim();
-        super_power = super_power.trim();
-        if (!(email && fave_hero && super_power
-            && password && confirm_password)) {
-            // TODO: Show previous values upon return
-            return;
-        }
-        this.heroService
-            .register(email, fave_hero, super_power, password, confirm_password)
-            .subscribe(function (hero) { return _this.heroes.push(hero); });
-        // Subscribe pushes new person to the list, (causes exception error)
-        // TODO: redirect the user to the logged in view of the heros and super powers.
+        console.log(registerData);
+        this.loading = true;
+        this.heroService.register(registerData)
+            .subscribe(function (hero) {
+            //this.heroes.push(hero),
+            _this.alertService.success('Registration successful', true);
+            _this.router.navigate(['/']);
+        }, function (error) {
+            _this.alertService.error(error);
+            _this.loading = false;
+        });
     };
     RegisterComponent = __decorate([
         core_1.Component({
@@ -41,7 +59,7 @@ var RegisterComponent = (function () {
             styleUrls: ['register.component.css'],
             providers: [hero_service_1.HeroService]
         }), 
-        __metadata('design:paramtypes', [hero_service_1.HeroService, router_1.Router])
+        __metadata('design:paramtypes', [hero_service_1.HeroService, router_1.Router, alert_service_1.AlertService])
     ], RegisterComponent);
     return RegisterComponent;
 }());
