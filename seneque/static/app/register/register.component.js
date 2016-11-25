@@ -10,14 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
-// import { Headers } from '@angular/http';
 var forms_1 = require('@angular/forms');
-// import { Hero } from '../_models/hero';
 var hero_service_1 = require('../_services/hero.service');
 var alert_service_1 = require('../_services/alert.service');
 var RegisterComponent = (function () {
-    // heroes: Hero[];
-    // hero: Hero;
     function RegisterComponent(heroService, router, alertService) {
         this.heroService = heroService;
         this.router = router;
@@ -43,7 +39,6 @@ var RegisterComponent = (function () {
         this.loading = true;
         this.heroService.register(registerData)
             .subscribe(function (hero) {
-            //this.heroes.push(hero),
             _this.alertService.success('Registration successful', true);
             _this.router.navigate(['/']);
         }, function (error) {

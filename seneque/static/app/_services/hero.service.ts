@@ -11,10 +11,10 @@ import '../_helpers/rxjs-operators';
 @Injectable()
 export class HeroService {
 
-	private heroesUrl = 'app/heroes';  // URL to web api
-	private headers = new Headers({'Content-Type': 'application/json'});
+    private heroesUrl = 'app/heroes';  // URL to web api
+    private headers = new Headers({'Content-Type': 'application/json'});
 
-	constructor(private http: Http) {}
+    constructor(private http: Http) {}
 
     private extractData(res: Response) {
         let body = res.json();
@@ -35,42 +35,41 @@ export class HeroService {
     }
 
     getHero(id: number): Observable<Hero> {
-      	return this.getHeroes()
+        return this.getHeroes()
             .map(heroes => heroes.find(hero => hero.id === id))
             .do(data => console.log(data)) // diplay results in console
     } 
 
     update(hero: Hero): Promise<Hero> {
-      	const url = `${this.heroesUrl}/${hero.id}`;
-      	return this.http
-      		.put(url, JSON.stringify(hero), {headers: this.headers})
-      		.toPromise()
-      		.then(() => hero)
-      		.catch(this.handleError);
+        const url = `${this.heroesUrl}/${hero.id}`;
+        return this.http
+            .put(url, JSON.stringify(hero), {headers: this.headers})
+            .toPromise()
+            .then(() => hero)
+            .catch(this.handleError);
     } 
 
     create(heroName: string): Promise<Hero> {
-      	return this.http
-      		.post(this.heroesUrl, JSON.stringify({name: heroName}), {headers: this.headers})
-      		.toPromise()
-      		.then(res => res.json().data)
-      		.catch(this.handleError);
+        return this.http
+            .post(this.heroesUrl, JSON.stringify({name: heroName}), {headers: this.headers})
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
     }
 
     delete(id: number): Promise<void> {
-      	const url = `${this.heroesUrl}/${id}`;
-      	return this.http
-      		.delete(url, {headers: this.headers})
-      		.toPromise()
-      		.then(() => null)
-      		.catch(this.handleError)
+        const url = `${this.heroesUrl}/${id}`;
+        return this.http
+            .delete(url, {headers: this.headers})
+            .toPromise()
+            .then(() => null)
+            .catch(this.handleError)
     }
 
     register(registerData: any): 
         Observable<Hero> {
             const url = 'api/v1/accounts/';
             let options = {headers: this.headers};
-
         return this.http
             .post(url, registerData, options)
             .map(this.extractData)

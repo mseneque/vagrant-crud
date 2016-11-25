@@ -16,6 +16,7 @@ import './_helpers/rxjs-operators';
 			<a routerLink="/register" routerLinkActive="active">Register a Hero</a>
 			<a routerLink="/login" routerLinkActive="active">Login</a>
 		</nav>
+		<alert></alert>
 		<router-outlet></router-outlet>
 	`,
 	styleUrls: ['app.component.css']

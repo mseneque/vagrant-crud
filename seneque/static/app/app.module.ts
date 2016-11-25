@@ -12,6 +12,7 @@ import { DashboardComponent }  from './dashboard/dashboard.component';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { HeroesComponent }     from './heroes/heroes.component';
 import { RegisterComponent }   from './register/register.component';
+import { AlertComponent }      from './_helpers/alert.component';
 
 // Providers
 import { HeroService } from './_services/hero.service';
@@ -43,7 +44,8 @@ import { InMemoryDataService }  from './_helpers/in-memory-data.service';
     DashboardComponent,
     HeroDetailComponent,
     HeroesComponent,
-    RegisterComponent
+    RegisterComponent,
+    AlertComponent
   ],
 
   // Providers
