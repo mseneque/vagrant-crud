@@ -18,6 +18,8 @@ var HeroesComponent = (function () {
     function HeroesComponent(heroService, router) {
         this.heroService = heroService;
         this.router = router;
+        this.heroes = [];
+        this.selectedHero = JSON.parse(localStorage.getItem('selectedHero'));
     }
     // ngOnInit is a lifecycle hook. Used to load service on Initialisation, similar to constructor.
     HeroesComponent.prototype.ngOnInit = function () { this.getHeroes(); };

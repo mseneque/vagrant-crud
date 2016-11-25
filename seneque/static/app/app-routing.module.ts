@@ -11,13 +11,16 @@ import { DashboardComponent }  from './dashboard/dashboard.component';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { HeroesComponent }     from './heroes/heroes.component';
 import { RegisterComponent }   from './register/register.component';
+import { LoginComponent }      from './login/login.component';
+import { RouteGuard }          from './_guards/route.guard';
 
 const routes: Routes = [
-	{ path: '', redirectTo: '/dashboard', pathMatch: 'full'	},
-	{	path: 'heroes',     component: HeroesComponent },
+	{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+	{ path: 'heroes',     component: HeroesComponent },
 	{ path: 'dashboard',  component: DashboardComponent },
 	{ path: 'detail/:id',	component: HeroDetailComponent },
-  { path: 'register', component: RegisterComponent}
+    { path: 'register', component: RegisterComponent },
+    { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({

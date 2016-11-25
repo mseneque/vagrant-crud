@@ -16,16 +16,15 @@ import { HeroService } from '../_services/hero.service';
 export class HeroesComponent implements OnInit{
 
   errorMessage: string;
-  heroes: Hero[];
+  heroes: Hero[] = [];
   selectedHero: Hero;
 
 	//The constructor itself does nothing. The parameter simultaneously defines a 
 	//private heroService property and identifies it as a HeroService injection site.
 	//Now Angular will know to supply an instance of the HeroService when it creates a new AppComponent.
-	constructor(
-    private heroService: HeroService,
-    private router: Router
-    ) {} 
+	constructor(private heroService: HeroService, private router: Router) {
+    this.selectedHero = JSON.parse(localStorage.getItem('selectedHero'))
+  } 
 
   // ngOnInit is a lifecycle hook. Used to load service on Initialisation, similar to constructor.
   ngOnInit(): void { this.getHeroes(); }

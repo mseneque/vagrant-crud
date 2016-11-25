@@ -4,29 +4,29 @@
     <ul>
       <li>
         <label>Email:</label> 
-        <input type="email" name="email" placeholder="eg. john@email.com" formControlName="email"/>
+        <input type="email" class="form-control" name="email" placeholder="eg. john@email.com" formControlName="email"/>
         <div *ngIf="form.controls.email.errors" class="error">Email is invalid</div>
       </li>
       <li>
         <label>Favourite Hero:</label>
-        <input type="text" name="fave_hero" placeholder="your hero" formControlName="fave_hero"/>
+        <input type="text" class="form-control" name="fave_hero" placeholder="your hero" formControlName="fave_hero"/>
         <div *ngIf="form.controls.fave_hero.errors?.pattern" class="error">Name is invalid</div>
       </li>
       <li>
         <label>Super Power:</label>
-        <input type="text" name="super_power" placeholder="sonic boom!" formControlName="super_power"/>    
+        <input type="text" class="form-control" name="super_power" placeholder="sonic boom!" formControlName="super_power"/>    
       </li>
       <li>
         <label>Password:</label>
-        <input type="password" name="password" placeholder="password123" formControlName="password"/>  
+        <input type="password" class="form-control" name="password" placeholder="password123" formControlName="password"/>  
       </li>
       <li>
         <label>Confirm Password:</label>
-        <input type="password" name="confirm_password" placeholder="password123" />  
+        <input type="password" class="form-control" name="confirm_password" placeholder="password123" />  
       </li>
     </ul>
     <div class="form-group">
-      <button type="submit" [disabled]="!form.valid" class="btn btn-primary">Register</button>
+      <button type="submit" [disabled]="loading || !form.valid" class="btn btn-primary">Register</button>
       <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
       <a [routerLink]="['/']" class="btn btn-link">Cancel</a>
         </div>

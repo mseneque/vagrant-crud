@@ -19,14 +19,25 @@ var HeroService = (function () {
         this.heroesUrl = 'app/heroes'; // URL to web api
         this.headers = new http_2.Headers({ 'Content-Type': 'application/json' });
     }
-    HeroService.prototype.extractData = function (res) {
-        var body = res.json();
+    // private methods
+    HeroService.prototype.extractData = function (response) {
+        var body = response.json();
         return body.data || {};
+    };
+    HeroService.prototype.getOptions = function () {
+        // create header to include JSON Web Token for authorisation
+        var selectedHero = JSON.parse(localStorage.getItem('selectedHero'));
+        if (selectedHero && selectedHero.token) {
+            var headers = new http_2.Headers({ 'Authorization': 'Bearer ' + selectedHero.token });
+            return new http_2.RequestOptions({ headers: headers });
+        }
     };
     HeroService.prototype.handleError = function (error) {
         console.error('An error occurred', error); // TODO: Add proper error handling
         return Promise.reject(error.message || error);
     };
+    // public methods
+    // interacts with fake in memory API
     HeroService.prototype.getHeroes = function () {
         return this.http
             .get(this.heroesUrl)
@@ -56,18 +67,17 @@ var HeroService = (function () {
     };
     HeroService.prototype.delete = function (id) {
         var url = this.heroesUrl + "/" + id;
-        return this.http
-            .delete(url, { headers: this.headers })
+        return this.http.delete(url, { headers: this.headers })
             .toPromise()
             .then(function () { return null; })
             .catch(this.handleError);
     };
+    // Interacts with Real API
     HeroService.prototype.register = function (registerData) {
         var url = 'api/v1/accounts/';
         var options = { headers: this.headers };
-        return this.http
-            .post(url, registerData, options)
-            .map(this.extractData)
+        return this.http.post(url, registerData, options)
+            .map(this.extractData) // .do(data => console.log(data))
             .catch(this.handleError);
     };
     HeroService = __decorate([

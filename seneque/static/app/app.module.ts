@@ -12,11 +12,16 @@ import { DashboardComponent }  from './dashboard/dashboard.component';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { HeroesComponent }     from './heroes/heroes.component';
 import { RegisterComponent }   from './register/register.component';
-import { AlertComponent }      from './_helpers/alert.component';
+import { AlertComponent }      from './_directives/alert.component';
+import { LoginComponent }      from './login/login.component';
 
 // Providers
-import { HeroService } from './_services/hero.service';
+import { HeroService }  from './_services/hero.service';
 import { AlertService } from './_services/alert.service';
+import { AuthService }  from './_services/auth.service';
+
+// Guards
+import { RouteGuard } from './_guards/route.guard';
 
 // Imports for loading & configuring the in-memory web api
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -45,13 +50,16 @@ import { InMemoryDataService }  from './_helpers/in-memory-data.service';
     HeroDetailComponent,
     HeroesComponent,
     RegisterComponent,
-    AlertComponent
+    AlertComponent,
+    LoginComponent
   ],
 
-  // Providers
+  // Providers (& Guards)
   providers: [  
+    RouteGuard,
   	HeroService,
-    AlertService
+    AlertService,
+    AuthService
   ],
 
   // Entry point for the app code

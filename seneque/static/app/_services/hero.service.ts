@@ -10,21 +10,35 @@ import '../_helpers/rxjs-operators';
 // Updated the service to have a promise, it is now (async) (non-blocking)
 @Injectable()
 export class HeroService {
+    constructor(private http: Http) {}
 
     private heroesUrl = 'app/heroes';  // URL to web api
     private headers = new Headers({'Content-Type': 'application/json'});
+    
+    // private methods
 
-    constructor(private http: Http) {}
-
-    private extractData(res: Response) {
-        let body = res.json();
+    private extractData(response: Response) {
+        let body = response.json();
         return body.data || { };
+    }
+
+    private getOptions() {
+        // create header to include JSON Web Token for authorisation
+        let selectedHero = JSON.parse(localStorage.getItem('selectedHero'));
+        if (selectedHero && selectedHero.token) {
+            let headers = new Headers({ 'Authorization': 'Bearer ' + selectedHero.token });
+            return new RequestOptions({ headers: headers });
+        }
     }
 
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // TODO: Add proper error handling
         return Promise.reject(error.message || error);
     }
+
+    // public methods
+
+    // interacts with fake in memory API
 
     getHeroes (): Observable<Hero[]> {
         return this.http
@@ -59,21 +73,20 @@ export class HeroService {
 
     delete(id: number): Promise<void> {
         const url = `${this.heroesUrl}/${id}`;
-        return this.http
-            .delete(url, {headers: this.headers})
+        return this.http.delete(url, {headers: this.headers})
             .toPromise()
             .then(() => null)
             .catch(this.handleError)
     }
 
+    // Interacts with Real API
+
     register(registerData: any): 
         Observable<Hero> {
             const url = 'api/v1/accounts/';
             let options = {headers: this.headers};
-        return this.http
-            .post(url, registerData, options)
-            .map(this.extractData)
-            // .do(data => console.log(data))
+        return this.http.post(url, registerData, options)
+            .map(this.extractData) // .do(data => console.log(data))
             .catch(this.handleError);
     }
 

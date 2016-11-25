@@ -146,3 +146,6 @@ nav a.active {
 #app-nav-bar ul li {
   background-color: #4285f4
 }
+.error {
+  color: #FF0000;
+}

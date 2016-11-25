@@ -20,10 +20,14 @@ var dashboard_component_1 = require('./dashboard/dashboard.component');
 var hero_detail_component_1 = require('./hero-detail/hero-detail.component');
 var heroes_component_1 = require('./heroes/heroes.component');
 var register_component_1 = require('./register/register.component');
-var alert_component_1 = require('./_helpers/alert.component');
+var alert_component_1 = require('./_directives/alert.component');
+var login_component_1 = require('./login/login.component');
 // Providers
 var hero_service_1 = require('./_services/hero.service');
 var alert_service_1 = require('./_services/alert.service');
+var auth_service_1 = require('./_services/auth.service');
+// Guards
+var route_guard_1 = require('./_guards/route.guard');
 // Imports for loading & configuring the in-memory web api
 var angular_in_memory_web_api_1 = require('angular-in-memory-web-api');
 var in_memory_data_service_1 = require('./_helpers/in-memory-data.service');
@@ -49,12 +53,15 @@ var AppModule = (function () {
                 hero_detail_component_1.HeroDetailComponent,
                 heroes_component_1.HeroesComponent,
                 register_component_1.RegisterComponent,
-                alert_component_1.AlertComponent
+                alert_component_1.AlertComponent,
+                login_component_1.LoginComponent
             ],
-            // Providers
+            // Providers (& Guards)
             providers: [
+                route_guard_1.RouteGuard,
                 hero_service_1.HeroService,
-                alert_service_1.AlertService
+                alert_service_1.AlertService,
+                auth_service_1.AuthService
             ],
             // Entry point for the app code
             bootstrap: [app_component_1.AppComponent]
