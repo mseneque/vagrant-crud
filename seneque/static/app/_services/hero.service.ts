@@ -18,8 +18,7 @@ export class HeroService {
     // private methods
 
     private extractData(response: Response) {
-        let body = response.json();
-        return body.data || { };
+        return response.json() || { error: 'error' };
     }
 
     private getOptions() {
@@ -40,14 +39,6 @@ export class HeroService {
 
     // interacts with fake in memory API
 
-    getHeroes (): Observable<Hero[]> {
-        return this.http
-            .get(this.heroesUrl)
-            .map(this.extractData)
-            .do(data => console.log(data)) // diplay results in console
-            .catch(this.handleError);
-    }
-
     getHero(id: number): Observable<Hero> {
         return this.getHeroes()
             .map(heroes => heroes.find(hero => hero.id === id))
@@ -56,16 +47,14 @@ export class HeroService {
 
     update(hero: Hero): Promise<Hero> {
         const url = `${this.heroesUrl}/${hero.id}`;
-        return this.http
-            .put(url, JSON.stringify(hero), {headers: this.headers})
+        return this.http.put(url, JSON.stringify(hero), {headers: this.headers})
             .toPromise()
             .then(() => hero)
             .catch(this.handleError);
     } 
 
     create(heroName: string): Promise<Hero> {
-        return this.http
-            .post(this.heroesUrl, JSON.stringify({name: heroName}), {headers: this.headers})
+        return this.http.post(this.heroesUrl, JSON.stringify({name: heroName}), {headers: this.headers})
             .toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
@@ -76,7 +65,7 @@ export class HeroService {
         return this.http.delete(url, {headers: this.headers})
             .toPromise()
             .then(() => null)
-            .catch(this.handleError)
+            .catch(this.handleError);
     }
 
     // Interacts with Real API
@@ -87,6 +76,13 @@ export class HeroService {
             let options = {headers: this.headers};
         return this.http.post(url, registerData, options)
             .map(this.extractData) // .do(data => console.log(data))
+            .catch(this.handleError);
+    }
+
+    getHeroes (): Observable<Hero[]> {
+        return this.http.get('api/v1/accounts/')
+            .map(this.extractData)
+            .do(data => {console.log('print the api/v1/accounts/'), console.log(data.results)}) // diplay results in console
             .catch(this.handleError);
     }
 

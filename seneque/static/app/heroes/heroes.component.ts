@@ -19,6 +19,10 @@ export class HeroesComponent implements OnInit{
   heroes: Hero[] = [];
   selectedHero: Hero;
 
+  next_page: string;
+  prev_page: string;
+  count: number;
+
 	//The constructor itself does nothing. The parameter simultaneously defines a 
 	//private heroService property and identifies it as a HeroService injection site.
 	//Now Angular will know to supply an instance of the HeroService when it creates a new AppComponent.
@@ -27,20 +31,28 @@ export class HeroesComponent implements OnInit{
   } 
 
   // ngOnInit is a lifecycle hook. Used to load service on Initialisation, similar to constructor.
-  ngOnInit(): void { this.getHeroes(); }
+  ngOnInit(): void { 
+    this.next_page = null;
+    this.prev_page = null;
+    this.count = 0;
+    this.getHeroes(); 
+  }
 
   onSelect(hero: Hero): void {
   	this.selectedHero = hero;
   }
 
   getHeroes(): void {
-  	// this.heroes = this.heroService.getHeroes();
-  	// Now it will act on the Promise when it is resolved.
+  	// Now it will subscribe the observable when it is resolved.
   	this.heroService.getHeroes()
       .subscribe(
-        heroes => this.heroes = heroes,
+        heroes => { 
+          this.heroes = heroes['results'],
+          this.next_page = heroes['next'],
+          this.prev_page = heroes['previous'],
+          this.count = heroes['count']
+        },
         error => this.errorMessage = <any>error);
-  		// .then(heroes => this.heroes = heroes);
   }
 
   gotoDetail(): void {

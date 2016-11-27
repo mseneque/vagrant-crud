@@ -21,8 +21,7 @@ var HeroService = (function () {
     }
     // private methods
     HeroService.prototype.extractData = function (response) {
-        var body = response.json();
-        return body.data || {};
+        return response.json() || { error: 'error' };
     };
     HeroService.prototype.getOptions = function () {
         // create header to include JSON Web Token for authorisation
@@ -38,13 +37,6 @@ var HeroService = (function () {
     };
     // public methods
     // interacts with fake in memory API
-    HeroService.prototype.getHeroes = function () {
-        return this.http
-            .get(this.heroesUrl)
-            .map(this.extractData)
-            .do(function (data) { return console.log(data); }) // diplay results in console
-            .catch(this.handleError);
-    };
     HeroService.prototype.getHero = function (id) {
         return this.getHeroes()
             .map(function (heroes) { return heroes.find(function (hero) { return hero.id === id; }); })
@@ -52,15 +44,13 @@ var HeroService = (function () {
     };
     HeroService.prototype.update = function (hero) {
         var url = this.heroesUrl + "/" + hero.id;
-        return this.http
-            .put(url, JSON.stringify(hero), { headers: this.headers })
+        return this.http.put(url, JSON.stringify(hero), { headers: this.headers })
             .toPromise()
             .then(function () { return hero; })
             .catch(this.handleError);
     };
     HeroService.prototype.create = function (heroName) {
-        return this.http
-            .post(this.heroesUrl, JSON.stringify({ name: heroName }), { headers: this.headers })
+        return this.http.post(this.heroesUrl, JSON.stringify({ name: heroName }), { headers: this.headers })
             .toPromise()
             .then(function (res) { return res.json().data; })
             .catch(this.handleError);
@@ -78,6 +68,12 @@ var HeroService = (function () {
         var options = { headers: this.headers };
         return this.http.post(url, registerData, options)
             .map(this.extractData) // .do(data => console.log(data))
+            .catch(this.handleError);
+    };
+    HeroService.prototype.getHeroes = function () {
+        return this.http.get('api/v1/accounts/')
+            .map(this.extractData)
+            .do(function (data) { console.log('print the api/v1/accounts/'), console.log(data.results); }) // diplay results in console
             .catch(this.handleError);
     };
     HeroService = __decorate([

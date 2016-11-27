@@ -13,7 +13,6 @@ import './_helpers/rxjs-operators';
 		<nav>
 			<a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
 			<a routerLink="/heroes" routerLinkActive="active">Heroes</a>
-			<a routerLink="/register" routerLinkActive="active">Register a Hero</a>
 			<a routerLink="/login" routerLinkActive="active">Login</a>
 		</nav>
 		<alert></alert>
