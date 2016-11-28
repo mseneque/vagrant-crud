@@ -14,12 +14,14 @@ var common_1 = require('@angular/common');
 require('rxjs/add/operator/switchMap');
 var hero_1 = require('../_models/hero');
 var hero_service_1 = require('../_services/hero.service');
+var alert_service_1 = require('../_services/alert.service');
 var HeroDetailComponent = (function () {
     // Use the constructor to inject these services and saving the values to private fields.
-    function HeroDetailComponent(heroService, route, location) {
+    function HeroDetailComponent(heroService, route, location, alertService) {
         this.heroService = heroService;
         this.route = route;
         this.location = location;
+        this.alertService = alertService;
     }
     HeroDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -33,7 +35,12 @@ var HeroDetailComponent = (function () {
     HeroDetailComponent.prototype.save = function () {
         var _this = this;
         this.heroService.update(this.hero)
-            .then(function () { return _this.goBack(); });
+            .subscribe(function (data) {
+            _this.goBack();
+            _this.alertService.success('Successfully Updated!');
+        }, function (error) {
+            _this.alertService.error(error);
+        });
     };
     __decorate([
         core_1.Input(), 
@@ -46,7 +53,7 @@ var HeroDetailComponent = (function () {
             templateUrl: 'hero-detail.component.html',
             styleUrls: ['hero-detail.component.css']
         }), 
-        __metadata('design:paramtypes', [hero_service_1.HeroService, router_1.ActivatedRoute, common_1.Location])
+        __metadata('design:paramtypes', [hero_service_1.HeroService, router_1.ActivatedRoute, common_1.Location, alert_service_1.AlertService])
     ], HeroDetailComponent);
     return HeroDetailComponent;
 }());

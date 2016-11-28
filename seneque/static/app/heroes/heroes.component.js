@@ -18,7 +18,7 @@ var HeroesComponent = (function () {
     function HeroesComponent(heroService, router) {
         this.heroService = heroService;
         this.router = router;
-        this.heroes = [];
+        this.heroes_results = [];
         this.selectedHero = JSON.parse(localStorage.getItem('selectedHero'));
     }
     // ngOnInit is a lifecycle hook. Used to load service on Initialisation, similar to constructor.
@@ -28,6 +28,13 @@ var HeroesComponent = (function () {
         // this.prev_page = null;
         this.count = 0;
         this.getHeroes();
+        var temp = {
+            id: null,
+            email: null,
+            fave_hero: "Select a Hero",
+            super_power: "--------"
+        };
+        this.onSelect(temp);
     };
     HeroesComponent.prototype.onSelect = function (hero) {
         this.selectedHero = hero;
@@ -37,7 +44,7 @@ var HeroesComponent = (function () {
         // Now it will subscribe the observable when it is resolved.
         this.heroService.getHeroes()
             .subscribe(function (heroes) {
-            _this.heroes = heroes['results'],
+            _this.heroes_results = heroes['results'],
                 _this.count = heroes['count'];
             // this.next_page = heroes['next'],
             // this.prev_page = heroes['previous']
@@ -46,6 +53,17 @@ var HeroesComponent = (function () {
     HeroesComponent.prototype.gotoDetail = function () {
         this.router.navigate(['/detail', this.selectedHero.id]);
     };
+    HeroesComponent.prototype.delete = function (hero) {
+        var _this = this;
+        this.heroService.delete(hero.id)
+            .subscribe(function () {
+            _this.heroes_results = _this.heroes_results.filter(function (h) { return h !== hero; });
+            if (_this.selectedHero === hero) {
+                _this.selectedHero = null;
+            }
+        }, function (error) { return _this.errorMessage = error; });
+    };
+    //--- fix up the code below to work with the djangorestframework api ---
     // gotoNextPage(): void {
     //   this.current_page = this.next_page;
     //   this.getHeroes();
@@ -62,19 +80,9 @@ var HeroesComponent = (function () {
         }
         this.heroService.create(name)
             .then(function (hero) {
-            _this.heroes.push(hero); // Adds the new hero to the list of Heroes
+            _this.heroes_results.push(hero); // Adds the new hero to the list of Heroes
             _this.selectedHero = null;
         }, function (error) { return _this.errorMessage = error; });
-    };
-    HeroesComponent.prototype.delete = function (hero) {
-        var _this = this;
-        this.heroService.delete(hero.id)
-            .then(function () {
-            _this.heroes = _this.heroes.filter(function (h) { return h !== hero; });
-            if (_this.selectedHero === hero) {
-                _this.selectedHero = null;
-            }
-        });
     };
     HeroesComponent = __decorate([
         core_1.Component({

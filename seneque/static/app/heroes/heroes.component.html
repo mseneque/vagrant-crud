@@ -1,26 +1,26 @@
-<div *ngIf="selectedHero">
+<div *ngIf="selectedHero.fave_hero">
   <h2>
     {{selectedHero.fave_hero | uppercase}}
   </h2>
   <p>Has the superpower <span class="super_power">{{selectedHero.super_power}}</span></p>
   <button (click)="gotoDetail()">View Details</button>
 </div>
-<h2>Registered Heroes</h2>
 
 <!-- <div>
   <label>Hero name:</label> <input #heroName />
   <button (click)="add(heroName.value); heroName.value=''">Add</button>
 </div> -->
 
+<h2>{{count}} Registered Heroes</h2>
 <ul class="heroes">
-  <li *ngFor="let hero of heroes"
+  <li *ngFor="let hero of heroes_results"
   	[class.selected]="hero === selectedHero"
-  	(click)="onSelect(hero)">
+  	(click)="onSelect(hero)" (dblclick)="gotoDetail()">
     <span class="badge">{{hero.id}}</span> {{hero.fave_hero}}
     <!-- the $event.stopProagation will stop the click event passing through to the button underneath -->
     <button class="delete" (click)="delete(hero); $event.stopPropagation()">x</button>
   </li>
 </ul>
 
-<p>{{count}} heroes registered</p>
+<!-- <p>{{count}} heroes registered</p> -->
 

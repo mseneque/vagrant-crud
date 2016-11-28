@@ -45,13 +45,6 @@ var HeroService = (function () {
             .then(function (res) { return res.json().data; })
             .catch(this.handleError);
     };
-    HeroService.prototype.delete = function (id) {
-        var url = this.heroesUrl + "/" + id;
-        return this.http.delete(url, { headers: this.headers })
-            .toPromise()
-            .then(function () { return null; })
-            .catch(this.handleError);
-    };
     // Interacts with Real API
     HeroService.prototype.register = function (registerData) {
         var url = 'api/v1/accounts/';
@@ -74,12 +67,19 @@ var HeroService = (function () {
     HeroService.prototype.update = function (hero) {
         var url = "api/v1/accounts/" + hero.id + "/";
         var options = this.getOptions();
-        console.log('options = ' + options);
-        console.log('hero = ' + hero);
         return this.http.put(url, hero, options)
-            .toPromise()
-            .then(function () { return hero; })
+            .map(function () { return hero; })
             .catch(this.handleError);
+    };
+    HeroService.prototype.delete = function (id) {
+        var url = "api/v1/accounts/" + id + "/";
+        var options = this.getOptions();
+        return this.http.delete(url, options)
+            .map(function () { return null; })
+            .catch(this.handleError);
+        // .toPromise()
+        // .then(() => null)
+        // .catch(this.handleError);
     };
     HeroService = __decorate([
         core_1.Injectable(), 

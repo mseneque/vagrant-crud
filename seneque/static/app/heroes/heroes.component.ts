@@ -16,7 +16,7 @@ import { HeroService } from '../_services/hero.service';
 export class HeroesComponent implements OnInit{
 
   errorMessage: string;
-  heroes: Hero[] = [];
+  heroes_results: Hero[] = [];
   selectedHero: Hero;
 
   // next_page: string;
@@ -38,6 +38,13 @@ export class HeroesComponent implements OnInit{
     // this.prev_page = null;
     this.count = 0;
     this.getHeroes(); 
+    let temp: Hero = {
+      id: null,
+      email: null,
+      fave_hero: "Select a Hero",
+      super_power: "--------"
+    };
+    this.onSelect(temp);
   }
 
   onSelect(hero: Hero): void {
@@ -49,7 +56,7 @@ export class HeroesComponent implements OnInit{
   	this.heroService.getHeroes()
       .subscribe(
         heroes => { 
-          this.heroes = heroes['results'],
+          this.heroes_results = heroes['results'],
           this.count = heroes['count'];
           // this.next_page = heroes['next'],
           // this.prev_page = heroes['previous']
@@ -59,6 +66,18 @@ export class HeroesComponent implements OnInit{
   gotoDetail(): void {
     this.router.navigate(['/detail', this.selectedHero.id]);
   }
+
+  delete(hero: Hero): void {
+    this.heroService.delete(hero.id)
+      .subscribe(() => {
+        this.heroes_results = this.heroes_results.filter(h => h !== hero);
+        if (this.selectedHero === hero) { this.selectedHero = null; }
+      },
+        error => this.errorMessage = <any>error
+      );
+  }
+
+  //--- fix up the code below to work with the djangorestframework api ---
 
   // gotoNextPage(): void {
   //   this.current_page = this.next_page;
@@ -75,17 +94,10 @@ export class HeroesComponent implements OnInit{
     if (!name) { return; }
     this.heroService.create(name)
       .then(hero => {
-        this.heroes.push(hero); // Adds the new hero to the list of Heroes
+        this.heroes_results.push(hero); // Adds the new hero to the list of Heroes
         this.selectedHero = null;
       },
-      error => this.errorMessage = <any>error);
-  }
-
-  delete(hero: Hero): void {
-    this.heroService.delete(hero.id)
-      .then(() => {
-        this.heroes = this.heroes.filter(h => h !== hero);
-        if (this.selectedHero === hero) { this.selectedHero = null; }
-      })
+        error => this.errorMessage = <any>error
+      );
   }
 };

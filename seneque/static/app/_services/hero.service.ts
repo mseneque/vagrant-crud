@@ -47,14 +47,6 @@ export class HeroService {
             .catch(this.handleError);
     }
 
-    delete(id: number): Promise<void> {
-        const url = `${this.heroesUrl}/${id}`;
-        return this.http.delete(url, {headers: this.headers})
-            .toPromise()
-            .then(() => null)
-            .catch(this.handleError);
-    }
-
     // Interacts with Real API
 
     register(registerData: any): 
@@ -79,12 +71,22 @@ export class HeroService {
             // .do(data => console.log(data)) // diplay results in console
     } 
 
-    update(hero: Hero): Promise<Hero> {
+    update(hero: Hero): Observable<Hero> {
         const url = `api/v1/accounts/${hero.id}/`;
         let options = this.getOptions();
         return this.http.put(url, hero, options)
-            .toPromise()
-            .then(() => hero)
+            .map(() => hero)
             .catch(this.handleError);
-    } 
+    }
+
+    delete(id: number): Observable<void> {
+        const url = `api/v1/accounts/${id}/`;
+        let options = this.getOptions();
+        return this.http.delete(url, options)
+            .map(() => null)
+            .catch(this.handleError);
+            // .toPromise()
+            // .then(() => null)
+            // .catch(this.handleError);
+    }
 }
