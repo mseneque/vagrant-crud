@@ -15,11 +15,12 @@ var hero_detail_component_1 = require('./hero-detail/hero-detail.component');
 var heroes_component_1 = require('./heroes/heroes.component');
 var register_component_1 = require('./register/register.component');
 var login_component_1 = require('./login/login.component');
+var route_guard_1 = require('./_guards/route.guard');
 var routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-    { path: 'heroes', component: heroes_component_1.HeroesComponent },
+    { path: 'heroes', component: heroes_component_1.HeroesComponent, canActivate: [route_guard_1.RouteGuard] },
     { path: 'dashboard', component: dashboard_component_1.DashboardComponent },
-    { path: 'detail/:id', component: hero_detail_component_1.HeroDetailComponent },
+    { path: 'detail/:id', component: hero_detail_component_1.HeroDetailComponent, canActivate: [route_guard_1.RouteGuard] },
     { path: 'register', component: register_component_1.RegisterComponent },
     { path: 'login', component: login_component_1.LoginComponent }
 ];

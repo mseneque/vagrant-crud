@@ -24,7 +24,7 @@ var DashboardComponent = (function () {
         var _this = this;
         // '.then' method to be used with type 'promise'
         this.heroService.getHeroes()
-            .subscribe(function (heroes) { return _this.heroes = heroes.slice(0, 4); });
+            .subscribe(function (heroes) { return _this.heroes = heroes['results'].slice(0, 4); });
     };
     DashboardComponent = __decorate([
         core_1.Component({

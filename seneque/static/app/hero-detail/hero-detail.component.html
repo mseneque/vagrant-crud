@@ -1,10 +1,12 @@
 <div *ngIf="hero">
-	<h2>{{hero.name}} details!</h2>
-	<div><label>id: </label>{{hero.id}}</div>
+	<h2>{{hero.fave_hero}} details!</h2>
+    <div><label>id: </label>{{hero.id}}</div>
+    <div><label>contact: </label><div>{{hero.email}}</div></div>
+    <div><label>hero: </label><div>{{hero.fave_hero}}</div></div>
  	<div>
- 		<label>name: </label>
- 		<input [(ngModel)]="hero.name" placeholder="name"/>
- 	</div>
+    <label>super power: </label>
+ 	<div><input [(ngModel)]="hero.super_power" placeholder="superpower"/></div>
+    </div>
   <button (click)="goBack()">Back</button> 
   <button (click)="save()">save</button>
 </div>

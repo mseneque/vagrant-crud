@@ -19,8 +19,9 @@ export class HeroesComponent implements OnInit{
   heroes: Hero[] = [];
   selectedHero: Hero;
 
-  next_page: string;
-  prev_page: string;
+  // next_page: string;
+  // current_page: string;
+  // prev_page: string;
   count: number;
 
 	//The constructor itself does nothing. The parameter simultaneously defines a 
@@ -32,8 +33,9 @@ export class HeroesComponent implements OnInit{
 
   // ngOnInit is a lifecycle hook. Used to load service on Initialisation, similar to constructor.
   ngOnInit(): void { 
-    this.next_page = null;
-    this.prev_page = null;
+    // this.next_page = null;
+    // this.current_page = 'api/v1/accounts/';
+    // this.prev_page = null;
     this.count = 0;
     this.getHeroes(); 
   }
@@ -48,16 +50,25 @@ export class HeroesComponent implements OnInit{
       .subscribe(
         heroes => { 
           this.heroes = heroes['results'],
-          this.next_page = heroes['next'],
-          this.prev_page = heroes['previous'],
-          this.count = heroes['count']
+          this.count = heroes['count'];
+          // this.next_page = heroes['next'],
+          // this.prev_page = heroes['previous']
         },
-        error => this.errorMessage = <any>error);
-  }
+        error => this.errorMessage = <any>error);  }
 
   gotoDetail(): void {
     this.router.navigate(['/detail', this.selectedHero.id]);
   }
+
+  // gotoNextPage(): void {
+  //   this.current_page = this.next_page;
+  //   this.getHeroes();
+  // }
+
+  // gotoPrevPage(): void {
+  //   this.current_page = this.prev_page;
+  //   this.getHeroes();
+  // }
 
   add(name: string): void {
     name = name.trim();

@@ -16,16 +16,24 @@ class AccountSerializer(serializers.ModelSerializer):
 
         def create(self, validated_data):
             """
-            Create and return a new `Account` instance, given the validated data.
+            Create and return a new `Account` instance, given
+            the validated data.
             """
             return Account.objects.create(**validated_data)
 
         def update(self, instance, validated_data):
             """
-            Create and return an existing `Account` instance, given the validated data.
+            Create and return an existing `Account` instance,
+            given the validated data.
             """
-            instance.fave_hero = validated_data.get('fave_hero', instance.fave_hero)
-            instance.super_power = validated_data.get('super_power', instance.super_power)
+            instance.fave_hero = validated_data.get(
+                'fave_hero',
+                instance.fave_hero
+            )
+            instance.super_power = validated_data.get(
+                'super_power',
+                instance.super_power
+            )
             instance.save()
 
             password = validated_data.get('password', None)

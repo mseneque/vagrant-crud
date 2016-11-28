@@ -29,15 +29,11 @@ export class AuthService {
         return this.http.post(url, data, {headers: this.headers})
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
-                console.log('1');
                 let user = response.json();
-                console.log('2');
                 if (user && user.token) {
-                    console.log('1-1');
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('selectedHero', JSON.stringify(user));
                 }
-                console.log('3');
             })
             .catch(this.handleError);
     }

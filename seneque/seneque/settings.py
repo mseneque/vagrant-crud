@@ -39,7 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'authentication',
-    "compressor",
+    'compressor',
+    'rest_framework_jwt',
     # "pipeline",
 )
 
@@ -128,7 +129,7 @@ REST_FRAMEWORK = {
         # 'rest_framework.permissions.IsAdminUser',
         'rest_framework.permissions.IsAuthenticated',
     ),
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 100
 }
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()

@@ -6,7 +6,6 @@ import { Observable }      from 'rxjs/observable';
 
 import '../_helpers/rxjs-operators';
 
-
 // Updated the service to have a promise, it is now (async) (non-blocking)
 @Injectable()
 export class HeroService {
@@ -25,7 +24,9 @@ export class HeroService {
         // create header to include JSON Web Token for authorisation
         let selectedHero = JSON.parse(localStorage.getItem('selectedHero'));
         if (selectedHero && selectedHero.token) {
-            let headers = new Headers({ 'Authorization': 'Bearer ' + selectedHero.token });
+            console.log('selectedHero = ', selectedHero);
+            // let headers = new Headers({ 'Authorization': 'Bearer ' + selectedHero.token });
+            let headers = new Headers({ 'Authorization': 'JWT ' + selectedHero.token });
             return new RequestOptions({ headers: headers });
         }
     }
@@ -38,20 +39,6 @@ export class HeroService {
     // public methods
 
     // interacts with fake in memory API
-
-    getHero(id: number): Observable<Hero> {
-        return this.getHeroes()
-            .map(heroes => heroes.find(hero => hero.id === id))
-            .do(data => console.log(data)) // diplay results in console
-    } 
-
-    update(hero: Hero): Promise<Hero> {
-        const url = `${this.heroesUrl}/${hero.id}`;
-        return this.http.put(url, JSON.stringify(hero), {headers: this.headers})
-            .toPromise()
-            .then(() => hero)
-            .catch(this.handleError);
-    } 
 
     create(heroName: string): Promise<Hero> {
         return this.http.post(this.heroesUrl, JSON.stringify({name: heroName}), {headers: this.headers})
@@ -79,11 +66,25 @@ export class HeroService {
             .catch(this.handleError);
     }
 
-    getHeroes (): Observable<Hero[]> {
+    getHeroes(): Observable<Hero[]> {
         return this.http.get('api/v1/accounts/')
             .map(this.extractData)
-            .do(data => {console.log('print the api/v1/accounts/'), console.log(data.results)}) // diplay results in console
+            .do(data => {console.log('print the api/v1/accounts/'), console.log(data)}) // diplay results in console
             .catch(this.handleError);
     }
 
+    getHero(id: number): Observable<Hero> {
+        return this.getHeroes()
+            .map(heroes => heroes['results'].find(hero => hero.id === id))
+            // .do(data => console.log(data)) // diplay results in console
+    } 
+
+    update(hero: Hero): Promise<Hero> {
+        const url = `api/v1/accounts/${hero.id}/`;
+        let options = this.getOptions();
+        return this.http.put(url, hero, options)
+            .toPromise()
+            .then(() => hero)
+            .catch(this.handleError);
+    } 
 }

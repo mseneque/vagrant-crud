@@ -23,6 +23,6 @@ export class DashboardComponent implements OnInit{
     ngOnInit(): void {
         // '.then' method to be used with type 'promise'
         this.heroService.getHeroes()
-            .subscribe(heroes => this.heroes = heroes.slice(0, 4));
+            .subscribe(heroes => this.heroes = heroes['results'].slice(0, 4));
     }
 }

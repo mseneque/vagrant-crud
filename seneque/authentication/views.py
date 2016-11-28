@@ -5,16 +5,19 @@ from rest_framework.response import Response
 
 from authentication.models import Account
 from authentication.permissions import IsAccountOwner
-from authentication.serializers import AccountSerializer  # Inherits from rest_framework.serializers
+
+# Inherits from rest_framework.serializers
+from authentication.serializers import AccountSerializer
 
 
 class AccountViewSet(viewsets.ModelViewSet):
     """
     The actions provided by the ModelViewSet class are;
-    .list(), .retrieve(), .create(), .update(), .partial_update(), and .destroy()
+    .list(), .retrieve(), .create(), .update(), .partial_update()
+    and .destroy()
     for objects from the Account model
     """
-    lookup_field = 'email'
+    lookup_field = 'id'  # to use for the API endpoint e.g.^accounts/<id>
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
     # permission_classes = [IsAccountAdminOrReadOnly]
@@ -30,8 +33,8 @@ class AccountViewSet(viewsets.ModelViewSet):
 
     def create(self, request):
         """
-        Not using the serializers '.save' method because it will store the password in plain text.
-        Instead the
+        Not using the serializers '.save' method because it will store
+        the password in plain text. Instead the
         """
         serializer = self.serializer_class(data=request.data)
 
@@ -39,9 +42,15 @@ class AccountViewSet(viewsets.ModelViewSet):
             # create_user method from
             Account.objects.create_user(**serializer.validated_data)
 
-            return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
+            return Response(
+                serializer.validated_data,
+                status=status.HTTP_201_CREATED
+            )
 
         return Response({
             'status': 'Bad Request',
             'message': 'Account could not be created with the data recieved.'
         }, status=status.HTTP_400_BAD_REQUEST)
+
+    # def update(self, request, pk=None):
+    #     pass

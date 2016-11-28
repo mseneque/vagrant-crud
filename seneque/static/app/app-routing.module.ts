@@ -16,9 +16,9 @@ import { RouteGuard }          from './_guards/route.guard';
 
 const routes: Routes = [
 	{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-	{ path: 'heroes',     component: HeroesComponent },// canActivate: [RouteGuard] },
+	{ path: 'heroes',     component: HeroesComponent, canActivate: [RouteGuard] },
 	{ path: 'dashboard',  component: DashboardComponent },
-	{ path: 'detail/:id',	component: HeroDetailComponent }, // canActivate: [RouteGuard] },
+	{ path: 'detail/:id',	component: HeroDetailComponent, canActivate: [RouteGuard] },
     { path: 'register', component: RegisterComponent },
     { path: 'login', component: LoginComponent }
 ];

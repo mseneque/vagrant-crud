@@ -14,3 +14,10 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "seneque.settings")
 
 application = get_wsgi_application()
+
+"""
+If you are runnig Django on Apache using mod_wsgi you have to add
+WSGIPassAuthorization On
+in your httpd.conf. Otherwise authorization header will be stripped
+out by mod_wsgi.
+"""
