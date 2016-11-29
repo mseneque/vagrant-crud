@@ -92,12 +92,13 @@ bower install --allow-root
 #### Set up WSGI and Apache2 #######################################
 
 # Once Github has cloned to the folder change apache dir
-# owenership to www-data:www-data
-chown www-data:www-data /vagrant/seneque/seneque/apache/
+# owenership to vagrant
+chown vagrant:root /var/lock/apache2/
 
 # overwrite the existing apache config file with the modified one.
 cp /vagrant/apache2-sites-enabled-000-default.conf /etc/apache2/sites-enabled/000-default
-cp apache2-httpd.conf /etc/apache2/httpd.conf
+cp /vagrant/apache2-httpd.conf /etc/apache2/httpd.conf
+cp /vagrant/apache2-envvars /etc/apache2/envvars
 
 # start Apache2 server and serve files
-service apace2 restart
+service apache2 restart
