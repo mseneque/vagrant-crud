@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 apt-get update
+
+# Install apache2
 apt-get install -y apache2
 if ! [ -L /var/www ]; then
   rm -rf /var/www
@@ -14,6 +16,9 @@ apt-get install -y curl
 # Extra dependancies
 apt-get install -y build-essential checkinstall
 apt-get install -y libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev
+
+# Install mod_wsgi
+apt-get install -y libapache2-mod-wsgi-py3
 
 # Install Node.js v6.9.1 LTS and npm 3.10.8
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
@@ -65,6 +70,7 @@ git config --global core.editor "nano"
 git config --global color.ui true
 git remote add origin https://gitihub.com/mseneque/vagrant-crud.git
 
+
 # cd /vagrant
 # git add .
 # git commit -m "pressent tense meesage of changes"
@@ -81,3 +87,17 @@ apt-get autoremove
 # Bower usage: https://bower.io/
 cd /vagrant/seneque
 bower install --allow-root
+
+
+#### Set up WSGI and Apache2 #######################################
+
+# Once Github has cloned to the folder change apache dir
+# owenership to www-data:www-data
+chown www-data:www-data /vagrant/seneque/seneque/apache/
+
+# overwrite the existing apache config file with the modified one.
+cp /vagrant/apache2-sites-enabled-000-default.conf /etc/apache2/sites-enabled/000-default
+cp apache2-httpd.conf /etc/apache2/httpd.conf
+
+# start Apache2 server and serve files
+service apace2 restart

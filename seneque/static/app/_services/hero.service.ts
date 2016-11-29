@@ -11,7 +11,7 @@ import '../_helpers/rxjs-operators';
 export class HeroService {
     constructor(private http: Http) {}
 
-    private heroesUrl = 'app/heroes';  // URL to web api
+    private heroesUrl = 'app/heroes';  // URL to fake web api
     private headers = new Headers({'Content-Type': 'application/json'});
     
     // private methods
